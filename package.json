@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^1.0.0-beta.10",
+    "@rainbow-me/rainbowkit": "^0.7.3",
     "bootstrap": "^5.2.2",
     "next": "12.3.1",
     "react": "18.2.0",
-    "react-bootstrap": "^2.5.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "wagmi": "^0.7.5"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
@@ -28,7 +30,7 @@
     "chai": "^4.2.0",
     "eslint": "8.25.0",
     "eslint-config-next": "12.3.1",
-    "ethers": "^5.4.7",
+    "ethers": "^5.7.2",
     "hardhat": "^2.11.1",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.8.0",

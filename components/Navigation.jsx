@@ -1,87 +1,79 @@
+import Link from "next/link";
+import { Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
+import { Box } from "./Box";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { LoginButton } from "./LoginButton";
 
-export const Navigation= () => {
-    return (
-    
+export const Navigation = () => {
+  const collapseItems = [
+    "Profile",
+    "Dashboard",
+    "Activity",
+    "Analytics",
+    "System",
+    "Deployments",
+    "My Settings",
+    "Team Settings",
+    "Help & Feedback",
+    "Log Out",
+  ];
 
-<header className="transparent border-bottom">
-<div className="container">
-<div className="row">
-    <div className="col-md-12">
-        <div className="de-flex sm-pt10">
-            <div className="de-flex-col">
-                <div className="de-flex-col">
-                    <div id="logo">
-                        <a href="dark-index.html">
-                            <img alt="" src="images/logo-light.png" />
-                        </a>
-                    </div>
-                </div>
-                <div className="de-flex-col">
-                    <input id="quick_search" className="xs-hide" name="quick_search" placeholder="search item here..." type="text" />
-                </div>
-            </div>
-            <div className="de-flex-col header-col-mid">
-                <ul id="mainmenu">
-                    <li>
-                        <a href="dark-index.html">Home<span></span></a>
-                        <ul>
-                            <li><a href="dark-index.html">Homepage 1</a></li>
-                            <li><a href="dark-index-2.html">Homepage 2</a></li>
-                            <li><a href="dark-index-3.html">Homepage 3</a></li>
-                        </ul>
-                    </li>                                                                        
-                    <li>
-                        <a href="dark-explore.html">Explore<span></span></a>
-                        <ul>
-                            <li><a href="dark-explore.html">Explore</a></li>
-                            <li><a href="dark-collection.html">Collections</a></li>
-                            <li><a href="dark-item-details.html">Item Details</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="dark-activity.html">Activity<span></span></a>
-                    </li>
-                    <li>
-                        <a href="#">Pages<span></span></a>
-                        <ul>
-                            <li><a href="dark-author.html">Author</a></li>
-                            <li><a href="dark-news.html">News</a></li>
-                            <li><a href="dark-gallery.html">Gallery</a></li>
-                            <li><a href="dark-login.html">Login</a></li>
-                            <li><a href="dark-login-2.html">Login 2</a></li>
-                            <li><a href="dark-register.html">Register</a></li>
-                            <li><a href="dark-contact.html">Contact Us</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Elements<span></span></a>
-                        <ul>
-                            <li><a href="dark-icons-elegant.html">Elegant Icons</a></li>
-                            <li><a href="dark-icons-etline.html">Etline Icons</a></li>
-                            <li><a href="dark-icons-font-awesome.html">Font Awesome Icons</a></li>
-                            <li><a href="dark-accordion.html">Accordion</a></li> 
-                            <li><a href="dark-alerts.html">Alerts</a></li>
-                            <li><a href="dark-counters.html">Counters</a></li>
-                            <li><a href="dark-modal.html">Modal</a></li>
-                            <li><a href="dark-popover.html">Popover</a></li>
-                            <li><a href="dark-pricing-table.html">Pricing Table</a></li>
-                            <li><a href="dark-progress-bar.html">Progress Bar</a></li>
-                            <li><a href="dark-tabs.html">Tabs</a></li>
-                            <li><a href="dark-tooltips.html">Tooltips</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div className="menu_side_area">
-                    <a href="dark-login.html" className="btn-main">Login</a>
-                    <span id="menu-btn"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</header>
-
-    
-)
-}
+  return (
+    <Box
+      css={{
+        maxW: "100%",
+      }}
+    >
+      <Navbar variant="sticky">
+        <Navbar.Toggle showIn="xs" />
+        <Navbar.Brand
+          css={{
+            "@xs": {
+              w: "12%",
+            },
+          }}
+        >
+          <Text b color="inherit" hideIn="xs">
+            ACME
+          </Text>
+        </Navbar.Brand>
+        <Navbar.Content
+          enableCursorHighlight
+          activeColor="secondary"
+          hideIn="xs"
+          variant="highlight-rounded"
+        >
+          <Navbar.Link href="#">Home</Navbar.Link>
+          <Navbar.Link href="#">Get Your NFT</Navbar.Link>
+        </Navbar.Content>
+        <Navbar.Content>
+          <Navbar.Item>
+            <LoginButton />
+          </Navbar.Item>
+        </Navbar.Content>
+        <Navbar.Collapse>
+          {collapseItems.map((item, index) => (
+            <Navbar.CollapseItem
+              key={item}
+              activeColor="secondary"
+              css={{
+                color: index === collapseItems.length - 1 ? "$error" : "",
+              }}
+              isActive={index === 2}
+            >
+              <Link
+                color="inherit"
+                css={{
+                  minWidth: "100%",
+                }}
+                href="#"
+              >
+                {item}
+              </Link>
+            </Navbar.CollapseItem>
+          ))}
+        </Navbar.Collapse>
+      </Navbar>
+    </Box>
+  );
+};
