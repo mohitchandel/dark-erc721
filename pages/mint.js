@@ -18,22 +18,25 @@ import { contractABI, contractAddress, tokenURI } from "../utils/constants";
 import { ethers } from "ethers";
 import Swal from "sweetalert2";
 
-
 export default function Mint() {
   const { address, isConnected } = useAccount();
   const [isLoading, setIsLoading] = useState(false);
   const [isAlreadyOwner, setAlreadyOwner] = useState(false);
 
   const mint = async () => {
+    if (!isConnected) {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong",
+        html: `Please Connect Wallet First`,
+      });
+      return;
+    }
     setIsLoading(true);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    console.log(contract)
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    console.log(contract);
     try {
       const tx = await contract.mintDarkNFT(address, tokenURI);
       await tx.wait();
@@ -62,11 +65,11 @@ export default function Mint() {
       contractABI,
       provider
     );
-    try{
+    try {
       const data = await contract.balanceOf(address);
       data == 1 ? setAlreadyOwner(true) : setAlreadyOwner(false);
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -102,22 +105,17 @@ export default function Mint() {
                     status="success"
                   />
                 </Grid>
-                {isAlreadyOwner ? (
-                  <Grid>
-                    <Text>You Own 1 NFT</Text>
-                  </Grid>
-                ) : (
-                  <Grid>
-                    <Spacer y={1} />
-                    {isConnected ? (
-                      <Button onClick={mint} disabled={isLoading}>
-                        {isLoading ? "Loading.." : "Mint Your NFT"}
-                      </Button>
-                    ) : (
-                      <Button disabled>Login First</Button>
-                    )}
-                  </Grid>
-                )}
+
+                <Grid>
+                  <Spacer y={1} />
+                  {isAlreadyOwner ? (
+                    <p>Already Owned</p>
+                  ) : (
+                    <Button onClick={mint} disabled={isLoading}>
+                      {isLoading ? "Loading.." : "Mint Your NFT"}
+                    </Button>
+                  )}
+                </Grid>
               </Grid.Container>
               <Spacer y={1} />
               <Image
@@ -134,7 +132,11 @@ export default function Mint() {
       </main>
 
       <footer className={styles.footer}>
-        <a target="_blank" rel="noreferrer" href="https://mohitchandel.github.io">
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://mohitchandel.github.io"
+        >
           Made by Mohit
         </a>
       </footer>
