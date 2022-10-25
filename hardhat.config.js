@@ -6,7 +6,7 @@ module.exports = {
   networks: {
     mumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
-      accounts: [process.env.NEXT_PUBLIC_PRIVATE_KEY],
+      accounts: [``],
     },
   },
   etherscan: {

@@ -58,7 +58,7 @@ export default function Mint() {
 
   const checkForOwn = async (address) => {
     const provider = new ethers.providers.JsonRpcProvider(
-      `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+      "https://rpc-mumbai.maticvigil.com/"
     );
     const contract = new ethers.Contract(
       contractAddress,
