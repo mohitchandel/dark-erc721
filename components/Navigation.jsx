@@ -2,9 +2,8 @@ import Link from "next/link";
 import { Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
 import { Box } from "./Box";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { LoginButton } from "./LoginButton";
 
-export const Navigation = () => {
+export const Navigation = ({children, active}) => {
   const collapseItems = [
     "Profile",
     "Dashboard",
@@ -22,6 +21,7 @@ export const Navigation = () => {
     <Box
       css={{
         maxW: "100%",
+        bg: "#fff",
       }}
     >
       <Navbar variant="sticky">
@@ -39,39 +39,39 @@ export const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
-          activeColor="secondary"
+          activeColor="primary"
           hideIn="xs"
           variant="highlight-rounded"
         >
-          <Navbar.Link href="#">Home</Navbar.Link>
-          <Navbar.Link href="#">Get Your NFT</Navbar.Link>
+          <Link href="/">
+            <Navbar.Link
+              isActive={active == "home" ? true : false}
+              css={{ cursor: "pointer", color: "#000" }}
+            >
+              Home
+            </Navbar.Link>
+          </Link>
+          <Link href="/mint">
+            <Navbar.Link
+              isActive={active == "mint" ? true : false}
+              css={{ cursor: "pointer", color: "#000" }}
+            >
+              Get Your NFT
+            </Navbar.Link>
+          </Link>
         </Navbar.Content>
         <Navbar.Content>
           <Navbar.Item>
-            <LoginButton />
+            <ConnectButton />
           </Navbar.Item>
         </Navbar.Content>
         <Navbar.Collapse>
-          {collapseItems.map((item, index) => (
-            <Navbar.CollapseItem
-              key={item}
-              activeColor="secondary"
-              css={{
-                color: index === collapseItems.length - 1 ? "$error" : "",
-              }}
-              isActive={index === 2}
-            >
-              <Link
-                color="inherit"
-                css={{
-                  minWidth: "100%",
-                }}
-                href="#"
-              >
-                {item}
-              </Link>
-            </Navbar.CollapseItem>
-          ))}
+          <Link color="inherit" href="/">
+            DAO
+          </Link>
+          <Link color="inherit" href="/mint">
+            Get Your NFT
+          </Link>
         </Navbar.Collapse>
       </Navbar>
     </Box>

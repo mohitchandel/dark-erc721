@@ -21,38 +21,44 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
-        <Navigation />
+        <Navigation active={"home"} />
       </header>
       <main className={styles.main}>
         <Container>
           <Row justify="center" align="center">
             <Col span={8}>
-              <Grid.Container>
-                <Grid md="3">
+              <Grid.Container css={{h: "50%"}}>
+                <Grid md="6" sm="12">
                   <Grid.Container>
-                    <Grid css={{ h:"10%"}}>
+                    <Grid>
+                      <div>
                       <Text
                         h1
                         size={60}
                         css={{
-                          textGradient: "45deg, $yellow600 -20%, $red600 100%",
+                          textGradient: "45deg, $blue600 -20%, $pink600 50%",
                         }}
                         weight="bold"
                       >
                         Welcome to the Dark NFT World
                       </Text>
-                    </Grid>
-                    <Grid>
-                      <Text size={20} color="#fff">Let's Jump into the dark world by claiming your NFT.</Text>
-                      <Button>Mint</Button>
+                      </div>
+                      <div>
+                      <Text css={{ mt: "15px" }} size={18} color="#fff">
+                        Let's Jump into the dark world by claiming your NFT.
+                        Mint your NFT before the 100 token supply hit its end.
+                        Current Index <span style={{color: "#17C964"}}>{"100"}</span>
+                      </Text>
+                      </div>
+                      <div>
+                        <Button weight={"sm"}>Mint</Button>
+                      </div>
                     </Grid>
                   </Grid.Container>
                 </Grid>
-                <Grid>
+                <Grid md="6" sm="12">
                   <Image
                     css={{ borderRadius: "10px" }}
-                    width={400}
-                    height={400}
                     src="./dark.png"
                     alt="Default Image"
                     objectFit="cover"
