@@ -3,19 +3,8 @@ import { Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
 import { Box } from "./Box";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-export const Navigation = ({children, active}) => {
-  const collapseItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+
+export const Navigation = ({ children, active }) => {
 
   return (
     <Box
@@ -62,7 +51,7 @@ export const Navigation = ({children, active}) => {
         </Navbar.Content>
         <Navbar.Content>
           <Navbar.Item>
-            <ConnectButton label="Login with MetaMask"/>
+            <ConnectButton label="Login with MetaMask" />
           </Navbar.Item>
         </Navbar.Content>
         <Navbar.Collapse>
