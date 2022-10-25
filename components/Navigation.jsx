@@ -62,7 +62,7 @@ export const Navigation = ({children, active}) => {
         </Navbar.Content>
         <Navbar.Content>
           <Navbar.Item>
-            <ConnectButton />
+            <ConnectButton label="Login with MetaMask"/>
           </Navbar.Item>
         </Navbar.Content>
         <Navbar.Collapse>

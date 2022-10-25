@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { Navigation } from "../components/Navigation";
 import styles from "../styles/Home.module.css";
@@ -13,8 +13,60 @@ import {
   Input,
   Spacer,
 } from "@nextui-org/react";
+import { useAccount } from "wagmi";
+import { contractABI, contractAddress } from "../utils/constants";
+import { ethers } from "ethers";
 
 export default function Mint() {
+  const { address, isConnected } = useAccount();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAlreadyOwner, setAlreadyOwner] = useState(false);
+
+  const mint = async () => {
+    setIsLoading(true);
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      );
+      const tx = await contract.mintDarkNFT(to, uri);
+      await tx.wait();
+      Swal.fire({
+        icon: "success",
+        title: "Minted successfully",
+        html: `<a href="https://mumbai.polygonscan.com//tx/${tx.hash}">View on explorer</a>`,
+      }).then(window.location.reload(false));
+      setIsLoading(false);
+    } catch (error) {
+      Swal.fire({
+        icon: "success",
+        title: "Something went wrong",
+        html: `Something went wrong`,
+      });
+      setIsLoading(false);
+    }
+  };
+
+  const checkForOwn = async (address) => {
+    const provider = new ethers.providers.JsonRpcProvider(
+      `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+    );
+    const contract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const data = await contract.balanceOf(address);
+    data == 1 ? setAlreadyOwner(true) : setAlreadyOwner(false);
+  };
+
+  useEffect(() => {
+    checkForOwn(address);
+  }, [address]);
+
   return (
     <div>
       <Head>
@@ -33,16 +85,32 @@ export default function Mint() {
                 <Grid md={12}>
                   <Input
                     readOnly
-                    initialValue={"0x0000"}
+                    initialValue={
+                      address
+                        ? address
+                        : "Connected wallet address will come here"
+                    }
                     css={{ w: "50%", margin: "0 auto" }}
                     labelLeft="Address"
                     status="success"
                   />
                 </Grid>
-                <Grid>
-                  <Spacer y={1} />
-                  <Button>Mint Your NFT</Button>
-                </Grid>
+                {isAlreadyOwner ? (
+                  <Grid>
+                    <Text>You Own 1 NFT</Text>
+                  </Grid>
+                ) : (
+                  <Grid>
+                    <Spacer y={1} />
+                    {isConnected ? (
+                      <Button onClick={mint} disabled={isLoading}>
+                        {isLoading ? "Loading.." : "Mint Your NFT"}
+                      </Button>
+                    ) : (
+                      <Button disabled>Login First</Button>
+                    )}
+                  </Grid>
+                )}
               </Grid.Container>
               <Spacer y={1} />
               <Image

@@ -11,8 +11,30 @@ import {
   Row,
   Col,
 } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import {ethers} from "ethers";
+import { contractABI, contractAddress } from "../utils/constants";
 
 export default function Home() {
+  const [totalCount, setTotalCount] = useState(0);
+
+  const getTotalCount = async () => {
+    const provider = new ethers.providers.JsonRpcProvider(
+      `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+    );
+    const contract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      provider
+    );
+    const data = await contract.getTotalNumber();
+    setTotalCount(coffees);
+  };
+
+  useEffect(() => {
+    getTotalCount();
+  }, [])
+
   return (
     <div>
       <Head>
@@ -27,28 +49,29 @@ export default function Home() {
         <Container>
           <Row justify="center" align="center">
             <Col span={8}>
-              <Grid.Container css={{h: "50%"}}>
+              <Grid.Container css={{ h: "50%" }}>
                 <Grid md="6" sm="12">
                   <Grid.Container>
                     <Grid>
                       <div>
-                      <Text
-                        h1
-                        size={60}
-                        css={{
-                          textGradient: "45deg, $blue600 -20%, $pink600 50%",
-                        }}
-                        weight="bold"
-                      >
-                        Welcome to the Dark NFT World
-                      </Text>
+                        <Text
+                          h1
+                          size={60}
+                          css={{
+                            textGradient: "45deg, $blue600 -20%, $pink600 50%",
+                          }}
+                          weight="bold"
+                        >
+                          Welcome to the Dark NFT World
+                        </Text>
                       </div>
                       <div>
-                      <Text css={{ mt: "15px" }} size={18} color="#fff">
-                        Let's Jump into the dark world by claiming your NFT.
-                        Mint your NFT before the 100 token supply hit its end.
-                        Current Index <span style={{color: "#17C964"}}>{"100"}</span>
-                      </Text>
+                        <Text css={{ mt: "15px" }} size={18} color="#fff">
+                          Let's Jump into the dark world by claiming your NFT.
+                          Mint your NFT before the 100 token supply hit its end.
+                          Current Index{" "}
+                          <span style={{ color: "#17C964" }}>{totalCount}</span>
+                        </Text>
                       </div>
                       <div>
                         <Button weight={"sm"}>Mint</Button>
