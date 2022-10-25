@@ -134,7 +134,7 @@ export default function Mint() {
       </main>
 
       <footer className={styles.footer}>
-        <a target="_blank" href="https://mohitchandel.github.io">
+        <a target="_blank" rel="noreferrer" href="https://mohitchandel.github.io">
           Made by Mohit
         </a>
       </footer>

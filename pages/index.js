@@ -69,10 +69,8 @@ export default function Home() {
                       </div>
                       <div>
                         <Text css={{ mt: "15px" }} size={18} color="#fff">
-                          Let's Jump into the dark world by claiming your NFT.
-                          Mint your NFT before the 100 token supply hit its end.
-                          Current Index{" "}
-                          <span style={{ color: "#17C964" }}>{totalCount}</span>
+                          Let&apos;s Jump into the dark world by claiming your NFT. Mint your NFT before the 100 token supply hit its end.
+                          Current Index <span style={{ color: "#17C964" }}>{totalCount}</span>
                         </Text>
                       </div>
                       <div>
@@ -96,7 +94,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <a target="_blank" href="https://mohitchandel.github.io">
+        <a target="_blank" rel="noreferrer" href="https://mohitchandel.github.io">
           Made by Mohit
         </a>
       </footer>
