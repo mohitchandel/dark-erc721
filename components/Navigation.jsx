@@ -34,7 +34,7 @@ export const Navigation = ({children, active}) => {
           }}
         >
           <Text b color="inherit" hideIn="xs">
-            ACME
+            Dark APE
           </Text>
         </Navbar.Brand>
         <Navbar.Content

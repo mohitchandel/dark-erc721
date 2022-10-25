@@ -57,19 +57,23 @@ export default function Mint() {
   };
 
   const checkForOwn = async (address) => {
-    const provider = new ethers.providers.JsonRpcProvider(
-      "https://rpc-mumbai.maticvigil.com/"
-    );
-    const contract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      provider
-    );
-    try {
-      const data = await contract.balanceOf(address);
-      data == 1 ? setAlreadyOwner(true) : setAlreadyOwner(false);
-    } catch (err) {
-      console.log(err);
+    if (ethers.utils.isAddress(address)) {
+      const provider = new ethers.providers.JsonRpcProvider(
+        "https://rpc-mumbai.maticvigil.com/"
+      );
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        provider
+      );
+      try {
+        const data = await contract.balanceOf(address);
+        data == 1 ? setAlreadyOwner(true) : setAlreadyOwner(false);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      return;
     }
   };
 
