@@ -13,10 +13,11 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import {ethers} from "ethers";
+import Router from 'next/router'
 import { contractABI, contractAddress } from "../utils/constants";
 
 export default function Home() {
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState();
 
   const getTotalCount = async () => {
     const provider = new ethers.providers.JsonRpcProvider(
@@ -28,7 +29,8 @@ export default function Home() {
       provider
     );
     const data = await contract.getTotalNumber();
-    setTotalCount(coffees);
+    const totalNftMint = +data;
+    setTotalCount(totalNftMint);
   };
 
   useEffect(() => {
@@ -74,7 +76,7 @@ export default function Home() {
                         </Text>
                       </div>
                       <div>
-                        <Button weight={"sm"}>Mint</Button>
+                        <Button weight={"sm"} onClick={() => Router.push('/mint')}>Mint</Button>
                       </div>
                     </Grid>
                   </Grid.Container>

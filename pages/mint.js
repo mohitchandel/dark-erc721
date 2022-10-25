@@ -14,8 +14,10 @@ import {
   Spacer,
 } from "@nextui-org/react";
 import { useAccount } from "wagmi";
-import { contractABI, contractAddress } from "../utils/constants";
+import { contractABI, contractAddress, tokenURI } from "../utils/constants";
 import { ethers } from "ethers";
+import Swal from "sweetalert2";
+
 
 export default function Mint() {
   const { address, isConnected } = useAccount();
@@ -24,15 +26,16 @@ export default function Mint() {
 
   const mint = async () => {
     setIsLoading(true);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+    console.log(contract)
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        contractAddress,
-        contractABI,
-        signer
-      );
-      const tx = await contract.mintDarkNFT(to, uri);
+      const tx = await contract.mintDarkNFT(address, tokenURI);
       await tx.wait();
       Swal.fire({
         icon: "success",
@@ -42,7 +45,7 @@ export default function Mint() {
       setIsLoading(false);
     } catch (error) {
       Swal.fire({
-        icon: "success",
+        icon: "error",
         title: "Something went wrong",
         html: `Something went wrong`,
       });
@@ -59,8 +62,12 @@ export default function Mint() {
       contractABI,
       provider
     );
-    const data = await contract.balanceOf(address);
-    data == 1 ? setAlreadyOwner(true) : setAlreadyOwner(false);
+    try{
+      const data = await contract.balanceOf(address);
+      data == 1 ? setAlreadyOwner(true) : setAlreadyOwner(false);
+    }catch(err){
+      console.log(err)
+    }
   };
 
   useEffect(() => {

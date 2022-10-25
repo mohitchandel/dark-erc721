@@ -1,4 +1,10 @@
-import DarkNFT from "../artifacts/contracts/DarkNFT.sol/DarkNFT.json"
+import DarkNFT from "../artifacts/contracts/DarkNFT.sol/DarkNFT.json";
 
 export const contractABI = DarkNFT.abi;
-export const contractAddress = '0xA255872E5a065F8a3a14fF934C66C41fee404198';
+export const contractAddress = "0xEfE24B1A8F1AC83a2a98E5C283153c05124623e3";
+export const tokenURI = {
+  description: "Just A Simple Dark APe",
+  image:
+    "https://bafybeibuomqlqdisyfxlfxmgmsilsxn4nhofy5n4wglvakdrujxk3xa5na.ipfs.nftstorage.link/",
+  name: "Dark Ape",
+};
