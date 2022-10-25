@@ -66,6 +66,7 @@ export default async function auth(req, res) {
     providers,
     session: {
       strategy: "jwt",
+      maxAge: 60 * 5,
     },
     secret: 'e35017a1c02b54ef614cd2ab68f5973a',
     callbacks: {

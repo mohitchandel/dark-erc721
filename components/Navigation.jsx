@@ -1,10 +1,39 @@
 import Link from "next/link";
-import { Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
+import { Navbar, Text, Grid, Button, Avatar } from "@nextui-org/react";
 import { Box } from "./Box";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-
+import { signOut, useSession } from "next-auth/react";
+import { useAccount } from "wagmi";
+import { useAccountModal } from "@rainbow-me/rainbowkit";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const Navigation = ({ children, active }) => {
+  const { data: session, status } = useSession();
+  const { address } = useAccount();
+  const { openAccountModal } = useAccountModal();
+
+  const getSessionTimeLeft = () => {
+    const sessionExp = session?.expires;
+    const sessionTime = new Date(sessionExp);
+    console.log(sessionTime);
+    const diffMs = sessionTime.getTime() - Date.now();
+    const minDiff = ((diffMs % 86400000) % 3600000) / 60000;
+    console.log(minDiff);
+    if (minDiff >= 0.9 && minDiff <= 1.1) {
+      Swal.fire({
+        icon: "info",
+        title: "session will end in one minute",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getSessionTimeLeft();
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [status]);
 
   return (
     <Box
@@ -51,7 +80,41 @@ export const Navigation = ({ children, active }) => {
         </Navbar.Content>
         <Navbar.Content>
           <Navbar.Item>
-            <ConnectButton label="Login with MetaMask" />
+            <div>
+              <Grid.Container>
+                <Grid css={{ padding: "10px" }}>
+                  {address ? (
+                    <Avatar
+                      onClick={openAccountModal}
+                      src="./avt.png"
+                      size="sm"
+                    />
+                  ) : (
+                    <ConnectButton
+                      accountStatus="avatar"
+                      showBalance={false}
+                      label="Login with MetaMask"
+                    />
+                  )}
+                </Grid>
+                <Grid css={{ margin: "auto" }}>
+                  {status === "authenticated" && address ? (
+                    <Button
+                      size={"xs"}
+                      href={`/api/auth/signout`}
+                      onClick={(e) => {
+                        // e.preventDefault();
+                        signOut();
+                      }}
+                    >
+                      Sign out
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </Grid>
+              </Grid.Container>
+            </div>
           </Navbar.Item>
         </Navbar.Content>
         <Navbar.Collapse>

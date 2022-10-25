@@ -9,7 +9,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { SessionProvider } from "next-auth/react"
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet],
+  [chain.polygonMumbai],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
     publicProvider(),
@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
     <WagmiConfig client={wagmiClient}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
         <RainbowKitSiweNextAuthProvider getSiweMessageOptions={SiweMessageOptions}>
-          <RainbowKitProvider chains={chains}>
+          <RainbowKitProvider coolMode chains={chains}>
             <Component {...pageProps} />
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
