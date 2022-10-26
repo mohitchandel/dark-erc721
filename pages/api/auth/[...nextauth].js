@@ -73,7 +73,7 @@ export default async function auth(req, res) {
       async session({ session, token }) {
         session.address = token.sub;
         session.user.name = token.sub;
-        session.user.image = "https://www.fillmurray.com/128/128";
+        session.user.image = "./avr.png";
         return session;
       },
     },
