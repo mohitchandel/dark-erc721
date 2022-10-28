@@ -27,8 +27,8 @@ export default async function auth(req, res) {
 
           const nextAuthUrl =
           "http://localhost:3000" ||
-            (process.env.VERCEL_URL
-              ? `https://${process.env.VERCEL_URL}`
+            (process.env.NEXT_PUBLIC_VERCEL_URL
+              ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
               : null);
           if (!nextAuthUrl) {
             return null;
